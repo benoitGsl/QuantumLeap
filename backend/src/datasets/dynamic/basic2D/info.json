@@ -1,0 +1,10 @@
+{
+  "label": "Basic2D",
+  "name": "basic2D",
+  "description": "The gestures recorded using a canvas.",
+  "gestures": [
+    "a",
+    "b",
+    "c"
+  ]
+}

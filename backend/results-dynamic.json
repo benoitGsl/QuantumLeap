@@ -1,0 +1,17 @@
+[
+  {
+    "r": 100,
+    "dataset": "basic2D",
+    "gestures": ["A", "B", "C"],
+    "data": [
+      {
+        "name": "PDollarPlusRecognizer",
+        "options": {"samplingPoints": 16, "points": {"lmc": ["point"]}},
+        "data": [
+          {"n": 1, "accuracy": 1, "time": 0.015224666657547155, "confusionMatrix": [[100, 0, 0], [0, 100, 0], [0, 0, 100]]},
+          {"n": 2, "accuracy": 1, "time": 0.024970666663721205, "confusionMatrix": [[100, 0, 0], [0, 100, 0], [0, 0, 100]]}
+        ]
+      }
+    ]
+  }
+]

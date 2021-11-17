@@ -56,48 +56,25 @@
               "moduleSettings": {},
               "additionalSettings": {
                 "datasets": [
-                  "guinevere"
+                  "basic2D"
                 ],
-                "id": "lmc"
+                "id": "a"
               }
             }
           ],
           "templatesPerClass": 8,
           "aggregateClasses": [
             {
-              "uuid": "f92868b5-27d0-4cb4-a0e1-13096c5da2f8",
-              "name": "rhand_uswipe",
-              "gestureClasses": [
-                "swipe_up"
-              ]
-            },
-            {
-              "uuid": "9747032b-4b52-4a31-9c2a-7c576e432fad",
-              "name": "rindex_airtap",
-              "gestureClasses": [
-                "tap"
-              ]
-            },
-            {
-              "uuid": "42e4d32f-5550-43f7-86c7-a87f0eeaf91b",
-              "name": "rhand_lswipe",
-              "gestureClasses": [
-                "swipe_left"
-              ]
-            },
-            {
-              "uuid": "2c9acf9a-775d-4322-a5ff-5b14bd884afa",
-              "name": "rhand_rswipe",
-              "gestureClasses": [
-                "swipe_right"
-              ]
-            },
-            {
               "uuid": "7c9f217b-6eeb-409d-9e2c-b255d5861730",
               "name": "rhand_dswipe",
               "gestureClasses": [
-                "swipe_down"
+                "a"
               ]
+            },
+            {
+              "uuid": "99cf2332-f6f4-4208-b3cd-9c2d6ec04b05",
+              "name": "",
+              "gestureClasses": []
             }
           ]
         }
@@ -182,19 +159,14 @@
         "dynamic": {
           "modules": [
             {
-              "uuid": "8e1d6701-5e39-4333-8f1e-f2446fc50968",
-              "moduleName": "jackknife",
+              "uuid": "62f3ed13-2936-4aba-b884-0eeb6f0d10b6",
+              "moduleName": "pdollarplus",
               "moduleType": "recognizers/dynamic",
               "moduleSettings": {
-                "samplingPoints": 16,
+                "samplingPoints": 15,
                 "points": {
                   "lmc": [
-                    "rightPalmPosition",
-                    "rightIndexTipPosition",
-                    "rightThumbTipPosition",
-                    "rightMiddleTipPosition",
-                    "rightRingTipPosition",
-                    "rightPinkyTipPosition"
+                    "leftIndexTipPosition"
                   ]
                 }
               },

@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const GestureSet = require('./gestures/gesture-set').GestureSet;
 const GestureClass = require('./gestures/gesture-class').GestureClass;
+const PDollarPlus = require('../implementation/recognizers/dynamic/pdollarplus/');
 const stringify = require("json-stringify-pretty-compact");
 
 // Important values
@@ -32,16 +33,16 @@ class Testing {
         gestures: Array.from(dataset.getGestureClasses().keys()),
         data: []
       };
-      for (let j = 0; j < this.recognizers.modules.length; j++) {
-        let recognizerModule = this.recognizers.modules[j];
-        let res = this.testRecognizer(dataset, recognizerModule);
-        console.log(recognizerModule.module.name);
-        datasetResults.data.push({
-          name: recognizerModule.module.name,
-          options: recognizerModule.moduleSettings,
-          data: res
-        });
-      }
+      // for (let j = 0; j < this.recognizers.modules.length; j++) {
+      let recognizerModule = PDollarPlus;
+      let res = this.testRecognizer(dataset, recognizerModule);
+      console.log(recognizerModule.module.name);
+      datasetResults.data.push({
+        name: recognizerModule.module.name,
+        options: recognizerModule.moduleSettings,
+        data: res
+      });
+      //}
       console.log(datasetResults)
       results.push(datasetResults);
     }
@@ -88,8 +89,8 @@ class UserIndependentTesting extends Testing {
           dataset.getGestureClasses().forEach((gestureClass) => {
             // Select a valid training template
             let training = -1;
-            while (training == -1 || markedTemplates[index].includes(training) || gestureClass.getSamples()[training].user == gestureClass.getSamples()[markedTemplates[index][0]].user) {
-            // while (training == -1 || markedTemplates[index].includes(training)) {
+            // while (training == -1 || markedTemplates[index].includes(training) || gestureClass.getSamples()[training].user == gestureClass.getSamples()[markedTemplates[index][0]].user) {
+            while (training == -1 || markedTemplates[index].includes(training)) {
               training = getRandomNumber(0, gestureClass.getSamples().length);
             }
             // Mark the training template

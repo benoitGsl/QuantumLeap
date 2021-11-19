@@ -34,6 +34,7 @@ class Recognizer extends AbstractDynamicRecognizer {
   recognize(sample) {
 		let points = convert(sample, this.paths);
 		if (points.length === 0) {
+            console.log("ERROR")
 			return { name: "", score: 0.0, time: 0 };
 		}
 		let result = this.recognizer.Recognize(points);
@@ -48,6 +49,9 @@ class Recognizer extends AbstractDynamicRecognizer {
 
 function convert(sample, paths) {
   let points = [];
+  console.log(sample);
+  console.log(paths);
+  console.log(sample.paths);
   paths.forEach((path, pathID) => {
     sample.paths[path].strokes.forEach((stroke, strokeId) => {
       stroke.points.forEach((point) => {

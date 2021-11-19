@@ -1,5 +1,5 @@
 const AbstractSensor = require('../../../framework/modules/sensors/abstract-sensor').AbstractSensor
-const Point = require('../../../framework/gestures/point').Point3D;
+const Point = require('../../../framework/gestures/Point').Point3D;
 const Leap = require('leapjs');
 
 const fingerNames = ["Thumb", "Index", "Middle", "Ring", "Pinky"];

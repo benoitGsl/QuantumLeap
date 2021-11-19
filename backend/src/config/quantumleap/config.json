@@ -50,25 +50,39 @@
         "dynamic": {
           "modules": [
             {
-              "uuid": "a79054f0-4bd7-418f-b28e-c6c1b144e4a5",
-              "moduleName": "leap-loader",
+              "uuid": "d858e91e-56b7-4e70-ba77-3a4e1114940e",
+              "moduleName": "handgesturecsv-loader",
               "moduleType": "datasets/dynamic",
               "moduleSettings": {},
               "additionalSettings": {
                 "datasets": [
                   "basic2D"
                 ],
-                "id": "a"
+                "id": "1"
               }
             }
           ],
-          "templatesPerClass": 8,
+          "templatesPerClass": 5,
           "aggregateClasses": [
             {
               "uuid": "7c9f217b-6eeb-409d-9e2c-b255d5861730",
-              "name": "rhand_dswipe",
+              "name": "a_gest",
               "gestureClasses": [
                 "a"
+              ]
+            },
+            {
+              "uuid": "8e0b4590-59ed-4cca-84a8-4e150206fd4c",
+              "name": "b_gest",
+              "gestureClasses": [
+                "b"
+              ]
+            },
+            {
+              "uuid": "851beaa8-e12d-4eb8-9f5b-984111739fd9",
+              "name": "c_gest",
+              "gestureClasses": [
+                "c"
               ]
             },
             {
@@ -159,14 +173,14 @@
         "dynamic": {
           "modules": [
             {
-              "uuid": "62f3ed13-2936-4aba-b884-0eeb6f0d10b6",
+              "uuid": "a14fa50c-8ddc-4394-a689-3bc6b90ec32d",
               "moduleName": "pdollarplus",
               "moduleType": "recognizers/dynamic",
               "moduleSettings": {
-                "samplingPoints": 15,
+                "samplingPoints": 2,
                 "points": {
                   "lmc": [
-                    "leftIndexTipPosition"
+                    "rightIndexTipPosition"
                   ]
                 }
               },

@@ -8,7 +8,7 @@
         "testingParams": {
           "r": 100,
           "minT": 1,
-          "maxT": 4
+          "maxT": 2
         },
         "globalParams": {
           "samplingPoints": 80,
@@ -38,7 +38,7 @@
         "dynamic": {
           "modules": [
             {
-              "uuid": "f01326d5-669f-434d-8f3f-795370425f99",
+              "uuid": "666cfb12-2b3c-42dc-be3c-3012369e8460",
               "moduleName": "pdollarplus",
               "moduleType": "recognizers/dynamic",
               "moduleSettings": {
@@ -53,7 +53,8 @@
                 "useCustomParams": false
               }
             }
-          ]
+          ],
+          "scoreThreshold": 0.25
         }
       }
     }

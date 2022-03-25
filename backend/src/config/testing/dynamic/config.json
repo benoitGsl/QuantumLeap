@@ -19,7 +19,7 @@
         "dynamic": {
           "modules": [
             {
-              "uuid": "23c42a1a-423f-49d8-98e4-f471cba3e992",
+              "uuid": "926f201b-72af-4c31-b136-ef8569bd33ce",
               "moduleName": "unified-loader",
               "moduleType": "datasets/dynamic",
               "moduleSettings": {},

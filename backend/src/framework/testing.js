@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const GestureSet = require('./gestures/gesture-set').GestureSet;
 const GestureClass = require('./gestures/gesture-class').GestureClass;
+const PDollarPlus = require('../implementation/recognizers/dynamic/pdollarplus/');
 const stringify = require("json-stringify-pretty-compact");
 const pdollar = require('../implementation/recognizers/dynamic/pdollarplus');
 // const recognizerModule = require("../implementation/recognizers/dynamic/pdollarplus");

@@ -51,41 +51,19 @@
           "modules": [
             {
               "uuid": "d858e91e-56b7-4e70-ba77-3a4e1114940e",
-              "moduleName": "handgesturecsv-loader",
+              "moduleName": "unified-loader",
               "moduleType": "datasets/dynamic",
               "moduleSettings": {},
               "additionalSettings": {
                 "datasets": [
                   "basic2D"
                 ],
-                "id": "1"
+                "id": "lmc"
               }
             }
           ],
-          "templatesPerClass": 5,
-          "aggregateClasses": [
-            {
-              "uuid": "7c9f217b-6eeb-409d-9e2c-b255d5861730",
-              "name": "a_gest",
-              "gestureClasses": [
-                "a"
-              ]
-            },
-            {
-              "uuid": "8e0b4590-59ed-4cca-84a8-4e150206fd4c",
-              "name": "b_gest",
-              "gestureClasses": [
-                "b"
-              ]
-            },
-            {
-              "uuid": "851beaa8-e12d-4eb8-9f5b-984111739fd9",
-              "name": "c_gest",
-              "gestureClasses": [
-                "c"
-              ]
-            }
-          ]
+          "aggregateClasses": [],
+          "templatesPerClass": 0
         }
       },
       "analyzers": {
@@ -172,10 +150,10 @@
               "moduleName": "pdollarplus",
               "moduleType": "recognizers/dynamic",
               "moduleSettings": {
-                "samplingPoints": 2,
+                "samplingPoints": 32,
                 "points": {
                   "lmc": [
-                    "rightIndexTipPosition"
+                    "point"
                   ]
                 }
               },

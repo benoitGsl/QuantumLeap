@@ -23,6 +23,8 @@ class Recognizer extends AbstractDynamicRecognizer {
   }
 
   addGesture(name, sample) {
+    //console.log("sample:", sample)
+    //console.log("name:", name)
     let points = convert(sample, this.paths);
     this.recognizer.AddGesture(name, points);
   }
@@ -49,10 +51,9 @@ class Recognizer extends AbstractDynamicRecognizer {
 
 function convert(sample, paths) {
   let points = [];
-  console.log(sample);
-  console.log(paths);
-  console.log(sample.paths);
   paths.forEach((path, pathID) => {
+    //console.log("path:", path);
+    //console.log("pathID:", pathID);
     sample.paths[path].strokes.forEach((stroke, strokeId) => {
       stroke.points.forEach((point) => {
         // If multipoint, one stroke per path, otherwise, keep original strokes

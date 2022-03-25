@@ -150,6 +150,35 @@ class FrameProcessor {
     return sg;
   }
 
+  recognizeDynamic2(recognizer, segment) {
+    let bestName = '';
+    let bestScore = -1;
+    // For each segment, attempt to recognize the gesture
+    try {
+      //console.log(recognizerModule)
+      // Recognize the gesture
+      // let recognizerModule = this.recognizers.recognizeDynamic();
+      // let recognizer = new recognizerModule.module(recognizerModule.moduleSettings);
+      let {name, score, time} = recognizer.recognize(segment);
+      // Keep the gesture with the highest score
+      if (score && score > bestScore) {
+        bestName = name;
+        bestScore = score;
+      }
+    } catch (error) {
+      console.error(`Dynamic gesture recognizer error: ${error.stack}`);
+    }
+    console.log("Best score:", bestScore);
+    console.log("Best name:", bestName);
+    console.log("scoreThreshold:", 0.15);
+    // 0.15 -> this.scoreThreshold
+    if (bestScore >= 0.15) {
+      return bestName;
+    } else {
+      return 'FAIL';
+    }
+  }
+
   analyze(frame) {
     let data = '';
     try {
@@ -178,7 +207,9 @@ class FrameProcessor {
       try {
         // Recognize the gesture
         let { name, score, time } = this.recognizers.dynamic.recognize(segment);
+        console.log("recognizeDynamic: name", name, " score :", score, " time :", time)
         // Keep the gesture with the highest score
+        console.log("score, bestScore: ", score, ", ",bestScore)
         if (score && score > bestScore) {
           bestName = name;
           bestScore = score;

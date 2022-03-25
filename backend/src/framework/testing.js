@@ -57,7 +57,6 @@ class Testing {
 }
 
   run() {
-    let results = [];
     let recognizerModule = this.recognizers.modules[0];
     // for (let i = 0; i < this.datasets.modules.length; i++) {
     //   let dataset = loadDataset(this.recognizerType, this.datasets);

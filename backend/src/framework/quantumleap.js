@@ -77,11 +77,8 @@ function setupWSS(config, server) {
             if (stat.isDirectory()) {
               var arrayNameDirectory = fromPath.split("/");
               var nameDirectory = arrayNameDirectory[arrayNameDirectory.length-1]
-              console.log("'%s' is a directory.", fromPath);
-              console.log("nameDirectory : ", nameDirectory);
               allDirectory.push(nameDirectory)
             }
-            console.log("allDirectory1 = ", allDirectory)
             let messageDirectory = getMessage('data');
             var retDirectory = { type: 'dynamic', name: "information", data:{allDirectory}};
             if (retDirectory) {
@@ -137,34 +134,37 @@ function setupWSS(config, server) {
         let name_gesture = msg.name
         let name_gesture_upper = msg.name.toUpperCase()
         let number_files = 0;
-        let data = JSON.parse(JSON.stringify(msg.data).replace("\"", '"'));
-        fs.access("./src/datasets/dynamic/basic2D/"+name_gesture_upper+"/1", function(error) {
-          if (error) {
-            console.log("Directory does not exist.")
-            fs.mkdirSync("./src/datasets/dynamic/basic2D/"+name_gesture_upper+"/1", { recursive: true });
-            fs.writeFile("./src/datasets/dynamic/basic2D/"+name_gesture_upper+"/1/"+name_gesture+"-1.json", data, function(err) {
-              if(err) {
+        if(msg.data && name_gesture) {
+          let data = JSON.parse(JSON.stringify(msg.data).replace("\"", '"'));
+          fs.access("./src/datasets/dynamic/basic2D/" + name_gesture_upper + "/1", function (error) {
+            if (error) {
+              console.log("Directory does not exist.")
+              fs.mkdirSync("./src/datasets/dynamic/basic2D/" + name_gesture_upper + "/1", {recursive: true});
+              fs.writeFile("./src/datasets/dynamic/basic2D/" + name_gesture_upper + "/1/" + name_gesture + "-1.json", data, function (err) {
+                if (err) {
                   console.log(err);
-              } else {
-                  console.log("The file was saved!");
-              }
-            });
-          } else {
-            console.log("Directory exists.")
-            fs.readdir("./src/datasets/dynamic/basic2D/"+name_gesture_upper+"/1", (err, files) => {
-              console.log("files.length: ", files.length);
-              number_files = files.length+1
-              console.log("number_files:", number_files)
-              fs.writeFile("./src/datasets/dynamic/basic2D/"+name_gesture_upper+"/1/"+name_gesture+"-"+number_files.toString()+".json", data, function(err) {
-                if(err) {
-                    console.log(err);
                 } else {
-                    console.log("The file was saved!");
+                  console.log("The file was saved!");
                 }
               });
-            });
-          }
-        })
+            } else {
+              console.log("Directory exists.")
+              fs.readdir("./src/datasets/dynamic/basic2D/" + name_gesture_upper + "/1", (err, files) => {
+                number_files = files.length + 1
+                fs.writeFile("./src/datasets/dynamic/basic2D/" + name_gesture_upper + "/1/" + name_gesture + "-" + number_files.toString() + ".json", data, function (err) {
+                  if (err) {
+                    console.log(err);
+                  } else {
+                    console.log("The file was saved!");
+                  }
+                });
+              });
+            }
+          })
+        }
+        else{
+          console.log("No name or no data")
+        }
       }
     });
     // Stop previous sensor loop (if any) TODO In the future, find a better solution

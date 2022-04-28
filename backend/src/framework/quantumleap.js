@@ -7,6 +7,7 @@ const {GestureSet} = require("./gestures/gesture-set");
 const {GestureClass} = require("./gestures/gesture-class");
 const Testing = require("./testing").Testing
 var fs = require('fs');
+const fs2 = require('fs-extra')
 var process = require("process");
 
 class QuantumLeap {
@@ -57,43 +58,43 @@ function setupWSS(config, server) {
       if (config.general.general.debug) {
         console.log(message);
       }
-      var allDirectory = []
-      var moveFrom = "./src/datasets/dynamic/basic2D/";
-      fs.readdir(moveFrom, function (err, files) {
-        if (err) {
-          console.error("Could not list the directory.", err);
-          process.exit(1);
-        }
-
-        files.forEach(function (file, index) {
-          // Make one pass and make the file complete
-          var fromPath = path.join(moveFrom, file);
-
-          fs.stat(fromPath, function (error, stat) {
-            if (error) {
-              console.error("Error stating file.", error);
-              return;
-            }
-            if (stat.isDirectory()) {
-              var arrayNameDirectory = fromPath.split("/");
-              var nameDirectory = arrayNameDirectory[arrayNameDirectory.length-1]
-              allDirectory.push(nameDirectory)
-            }
-            let messageDirectory = getMessage('data');
-            var retDirectory = { type: 'dynamic', name: "information", data:{allDirectory}};
-            if (retDirectory) {
-              // If there is gesture data to send to the application
-              messageDirectory.data.push(retDirectory);
-              if (config.general.general.debug) {
-                console.log(JSON.stringify(messageDirectory));
-              }
-            }
-            if (messageDirectory.data.length > 0) {
-              ws.send(JSON.stringify(messageDirectory));
-            }
-          });
-        });
-      });
+      // var allDirectory = []
+      // var moveFrom = "./src/datasets/dynamic/basic2D/";
+      // fs.readdir(moveFrom, function (err, files) {
+      //   if (err) {
+      //     console.error("Could not list the directory.", err);
+      //     process.exit(1);
+      //   }
+      //
+      //   files.forEach(function (file, index) {
+      //     // Make one pass and make the file complete
+      //     var fromPath = path.join(moveFrom, file);
+      //
+      //     fs.stat(fromPath, function (error, stat) {
+      //       if (error) {
+      //         console.error("Error stating file.", error);
+      //         return;
+      //       }
+      //       if (stat.isDirectory()) {
+      //         var arrayNameDirectory = fromPath.split("/");
+      //         var nameDirectory = arrayNameDirectory[arrayNameDirectory.length-1]
+      //         allDirectory.push(nameDirectory)
+      //       }
+      //       let messageDirectory = getMessage('data');
+      //       var retDirectory = { type: 'dynamic', name: "information", data:{allDirectory}};
+      //       if (retDirectory) {
+      //         // If there is gesture data to send to the application
+      //         messageDirectory.data.push(retDirectory);
+      //         if (config.general.general.debug) {
+      //           console.log(JSON.stringify(messageDirectory));
+      //         }
+      //       }
+      //       if (messageDirectory.data.length > 0) {
+      //         ws.send(JSON.stringify(messageDirectory));
+      //       }
+      //     });
+      //   });
+      // });
 
       var msg = JSON.parse(message);
       if (msg.type === 'operation') {
@@ -164,6 +165,15 @@ function setupWSS(config, server) {
         }
         else{
           console.log("No name or no data")
+        }
+      }
+      else if(msg.type === 'clearDataset'){
+        try{
+          fs2.emptyDirSync("./src/datasets/dynamic/basic2D")
+          console.log('Empty Directory Sync Success !')
+        }
+        catch (e) {
+          console.log(e)
         }
       }
     });

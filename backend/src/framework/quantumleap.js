@@ -167,6 +167,18 @@ function setupWSS(config, server) {
           console.log("No name or no data")
         }
       }
+      else if (msg.type === 'clearGesture2d') {
+        let name_gesture = msg.name
+        console.log(name_gesture)
+        let name_gesture_upper = msg.name.toUpperCase()
+        if(name_gesture) {          
+          fs2.emptyDirSync("./src/datasets/dynamic/basic2D/"+name_gesture_upper)
+          fs.removeSync("./src/datasets/dynamic/basic2D/"+name_gesture_upper)
+        }
+        else{
+          console.log("No name")
+        }
+      }
       else if(msg.type === 'clearDataset'){
         try{
           fs2.emptyDirSync("./src/datasets/dynamic/basic2D")

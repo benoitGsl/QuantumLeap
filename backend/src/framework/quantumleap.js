@@ -171,9 +171,16 @@ function setupWSS(config, server) {
         let name_gesture = msg.name
         console.log(name_gesture)
         let name_gesture_upper = msg.name.toUpperCase()
-        if(name_gesture) {          
-          fs2.emptyDirSync("./src/datasets/dynamic/basic2D/"+name_gesture_upper)
-          fs.removeSync("./src/datasets/dynamic/basic2D/"+name_gesture_upper)
+        if(name_gesture) {     
+          try{
+            //fs2.emptyDirSync("./src/datasets/dynamic/basic2D/"+name_gesture_upper)
+            fs2.rmdir("./src/datasets/dynamic/basic2D/"+name_gesture_upper, {recursive: true, force: true})
+            console.log('Empty Directory of '+name_gesture_upper+' Success !')
+          }
+          catch (e) {
+            console.log(e)
+          }     
+          
         }
         else{
           console.log("No name")

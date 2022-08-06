@@ -167,7 +167,7 @@ function setupWSS(config, server) {
           console.log("No name or no data")
         }
       }
-      else if (msg.type === 'clearGesture2d') {
+      else if (msg.type === 'deleteGesture2d') {
         let name_gesture = msg.name
         console.log(name_gesture)
         let name_gesture_upper = msg.name.toUpperCase()

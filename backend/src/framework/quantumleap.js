@@ -131,6 +131,41 @@ function setupWSS(config, server) {
           ws.send(JSON.stringify(message));
         }
       }
+      else if (msg.type === 'drawGesture2d') {
+        let name_gesture = msg.name
+        let name_gesture_upper = msg.name.toUpperCase()
+        if(name_gesture) {
+          fs.access("./src/datasets/dynamic/basic2D/" + name_gesture_upper + "/1", function (error) {
+            if (error) {
+              console.log("Directory does not exist.")
+            } else {
+              console.log("Directory exists.")
+              fs.readFile("./src/datasets/dynamic/basic2D/" + name_gesture_upper + "/1/" + name_gesture + "-1.json",function(err,goodJson){
+                if (err) {
+                  console.log(err);
+                } else {
+                  console.log("data",JSON.parse(goodJson))
+                  var ret = { type: 'drawGesture', data: JSON.parse(goodJson) };
+                  let message = getMessage('data');
+                  if (ret) {
+                    // If there is gesture data to send to the application
+                    message.data.push(ret);
+                    if (config.general.general.debug) {
+                      console.log(JSON.stringify(message));
+                    }
+                  }
+                  if (message.data.length > 0) {
+                    ws.send(JSON.stringify(message));
+                  }
+                }
+              });
+            }
+          })
+        }
+        else{
+          console.log("No name or no data")
+        }
+      }
       else if (msg.type === 'addNewGesture2d') {
         let name_gesture = msg.name
         let name_gesture_upper = msg.name.toUpperCase()
@@ -167,7 +202,7 @@ function setupWSS(config, server) {
           console.log("No name or no data")
         }
       }
-      else if (msg.type === 'deleteGesture2d') {
+      else if (msg.type === 'clearGesture2d') {
         let name_gesture = msg.name
         console.log(name_gesture)
         let name_gesture_upper = msg.name.toUpperCase()

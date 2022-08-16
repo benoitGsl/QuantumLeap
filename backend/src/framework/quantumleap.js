@@ -116,7 +116,7 @@ function setupWSS(config, server) {
         let recognizerModule = recognizers.modules[0];
         let dataset = loadDataset("dynamic", datasets);
         let recognizer = new pdollar(recognizerModule.moduleSettings, dataset);
-        let name_recognize = frameProcessor.recognizeDynamic2(recognizer, msg.data)
+        let name_recognize = recognizeDynamic3(recognizer, msg.data)
         console.log(name_recognize);
         var ret = { type: 'dynamic', name: name_recognize, data: {} };
         let message = getMessage('data');
@@ -202,7 +202,7 @@ function setupWSS(config, server) {
           console.log("No name or no data")
         }
       }
-      else if (msg.type === 'clearGesture2d') {
+      else if (msg.type === 'deleteGesture2d') {
         let name_gesture = msg.name
         console.log(name_gesture)
         let name_gesture_upper = msg.name.toUpperCase()
@@ -271,6 +271,30 @@ function setupWSS(config, server) {
     });
   });
   return wss;
+}
+
+function recognizeDynamic3(recognizer, segment) {
+  let bestName = '';
+  let bestScore = -1;
+  // For each segment, attempt to recognize the gesture
+  try {
+    let {name, score, time} = recognizer.recognize(segment);
+    if (score && score > bestScore) {
+      bestName = name;
+      bestScore = score;
+    }
+  } catch (error) {
+    console.error(`Dynamic gesture recognizer error: ${error.stack}`);
+  }
+  console.log("Best score:", bestScore);
+  console.log("Best name:", bestName);
+  console.log("scoreThreshold:", 0.15);
+  // 0.15 -> this.scoreThreshold
+  if (bestScore >= 0.15) {
+    return bestName;
+  } else {
+    return 'FAIL';
+  }
 }
 
 function loadDataset(type, datasetsConfig) {

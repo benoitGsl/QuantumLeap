@@ -132,103 +132,16 @@ function setupWSS(config, server) {
         }
       }
       else if (msg.type === 'drawGesture2d') {
-        let name_gesture = msg.name
-        let name_gesture_upper = msg.name.toUpperCase()
-        if(name_gesture) {
-          fs.access("./src/datasets/dynamic/basic2D/" + name_gesture_upper + "/1", function (error) {
-            if (error) {
-              console.log("Directory does not exist.")
-            } else {
-              console.log("Directory exists.")
-              fs.readFile("./src/datasets/dynamic/basic2D/" + name_gesture_upper + "/1/" + name_gesture + "-1.json",function(err,goodJson){
-                if (err) {
-                  console.log(err);
-                } else {
-                  console.log("data",JSON.parse(goodJson))
-                  var ret = { type: 'drawGesture', data: JSON.parse(goodJson) };
-                  let message = getMessage('data');
-                  if (ret) {
-                    // If there is gesture data to send to the application
-                    message.data.push(ret);
-                    if (config.general.general.debug) {
-                      console.log(JSON.stringify(message));
-                    }
-                  }
-                  if (message.data.length > 0) {
-                    ws.send(JSON.stringify(message));
-                  }
-                }
-              });
-            }
-          })
-        }
-        else{
-          console.log("No name or no data")
-        }
+        datasetReader(msg)
       }
       else if (msg.type === 'addNewGesture2d') {
-        let name_gesture = msg.name
-        let name_gesture_upper = msg.name.toUpperCase()
-        let number_files = 0;
-        if(msg.data && name_gesture) {
-          let data = JSON.parse(JSON.stringify(msg.data).replace("\"", '"'));
-          fs.access("./src/datasets/dynamic/basic2D/" + name_gesture_upper + "/1", function (error) {
-            if (error) {
-              console.log("Directory does not exist.")
-              fs.mkdirSync("./src/datasets/dynamic/basic2D/" + name_gesture_upper + "/1", {recursive: true});
-              fs.writeFile("./src/datasets/dynamic/basic2D/" + name_gesture_upper + "/1/" + name_gesture + "-1.json", data, function (err) {
-                if (err) {
-                  console.log(err);
-                } else {
-                  console.log("The file was saved!");
-                }
-              });
-            } else {
-              console.log("Directory exists.")
-              fs.readdir("./src/datasets/dynamic/basic2D/" + name_gesture_upper + "/1", (err, files) => {
-                number_files = files.length + 1
-                fs.writeFile("./src/datasets/dynamic/basic2D/" + name_gesture_upper + "/1/" + name_gesture + "-" + number_files.toString() + ".json", data, function (err) {
-                  if (err) {
-                    console.log(err);
-                  } else {
-                    console.log("The file was saved!");
-                  }
-                });
-              });
-            }
-          })
-        }
-        else{
-          console.log("No name or no data")
-        }
+        datasetAddNewGesture(msg)
       }
       else if (msg.type === 'deleteGesture2d') {
-        let name_gesture = msg.name
-        console.log(name_gesture)
-        let name_gesture_upper = msg.name.toUpperCase()
-        if(name_gesture) {     
-          try{
-            //fs2.emptyDirSync("./src/datasets/dynamic/basic2D/"+name_gesture_upper)
-            fs2.rmdir("./src/datasets/dynamic/basic2D/"+name_gesture_upper, {recursive: true, force: true})
-            console.log('Empty Directory of '+name_gesture_upper+' Success !')
-          }
-          catch (e) {
-            console.log(e)
-          }     
-          
-        }
-        else{
-          console.log("No name")
-        }
+        datasetDeleteGesture(msg)
       }
       else if(msg.type === 'clearDataset'){
-        try{
-          fs2.emptyDirSync("./src/datasets/dynamic/basic2D")
-          console.log('Empty Directory Sync Success !')
-        }
-        catch (e) {
-          console.log(e)
-        }
+        clearDataset()
       }
     });
     // Stop previous sensor loop (if any) TODO In the future, find a better solution
@@ -327,6 +240,108 @@ function loadDataset(type, datasetsConfig) {
     return newDataset
   } else {
     return dataset;
+  }
+}
+
+function datasetReader(msg) {
+  let name_gesture = msg.name
+  let name_gesture_upper = msg.name.toUpperCase()
+  if(name_gesture) {
+    fs.access("./src/datasets/dynamic/basic2D/" + name_gesture_upper + "/1", function (error) {
+      if (error) {
+        console.log("Directory does not exist.")
+      } else {
+        console.log("Directory exists.")
+        fs.readFile("./src/datasets/dynamic/basic2D/" + name_gesture_upper + "/1/" + name_gesture + "-1.json",function(err,goodJson){
+          if (err) {
+            console.log(err);
+          } else {
+            console.log("data",JSON.parse(goodJson))
+            var ret = { type: 'drawGesture', data: JSON.parse(goodJson) };
+            let message = getMessage('data');
+            if (ret) {
+              // If there is gesture data to send to the application
+              message.data.push(ret);
+              if (config.general.general.debug) {
+                console.log(JSON.stringify(message));
+              }
+            }
+            if (message.data.length > 0) {
+              ws.send(JSON.stringify(message));
+            }
+          }
+        });
+      }
+    })
+  }
+  else{
+    console.log("No name or no data")
+  }
+}
+
+function datasetAddNewGesture(msg){
+  let name_gesture = msg.name
+  let name_gesture_upper = msg.name.toUpperCase()
+  let number_files = 0;
+  if(msg.data && name_gesture) {
+    let data = JSON.parse(JSON.stringify(msg.data).replace("\"", '"'));
+    fs.access("./src/datasets/dynamic/basic2D/" + name_gesture_upper + "/1", function (error) {
+      if (error) {
+        console.log("Directory does not exist.")
+        fs.mkdirSync("./src/datasets/dynamic/basic2D/" + name_gesture_upper + "/1", {recursive: true});
+        fs.writeFile("./src/datasets/dynamic/basic2D/" + name_gesture_upper + "/1/" + name_gesture + "-1.json", data, function (err) {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log("The file was saved!");
+          }
+        });
+      } else {
+        console.log("Directory exists.")
+        fs.readdir("./src/datasets/dynamic/basic2D/" + name_gesture_upper + "/1", (err, files) => {
+          number_files = files.length + 1
+          fs.writeFile("./src/datasets/dynamic/basic2D/" + name_gesture_upper + "/1/" + name_gesture + "-" + number_files.toString() + ".json", data, function (err) {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log("The file was saved!");
+            }
+          });
+        });
+      }
+    })
+  }
+  else{
+    console.log("No name or no data")
+  }
+}
+
+function datasetDeleteGesture(msg){
+  let name_gesture = msg.name
+  console.log(name_gesture)
+  let name_gesture_upper = msg.name.toUpperCase()
+  if(name_gesture) {
+    try{
+      //fs2.emptyDirSync("./src/datasets/dynamic/basic2D/"+name_gesture_upper)
+      fs2.rmdir("./src/datasets/dynamic/basic2D/"+name_gesture_upper, {recursive: true, force: true})
+      console.log('Empty Directory of '+name_gesture_upper+' Success !')
+    }
+    catch (e) {
+      console.log(e)
+    }
+
+  }
+  else{
+    console.log("No name")
+  }
+}
+function clearDataset(){
+  try{
+    fs2.emptyDirSync("./src/datasets/dynamic/basic2D")
+    console.log('Empty Directory Sync Success !')
+  }
+  catch (e) {
+    console.log(e)
   }
 }
 

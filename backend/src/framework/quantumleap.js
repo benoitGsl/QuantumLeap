@@ -132,7 +132,7 @@ function setupWSS(config, server) {
         }
       }
       else if (msg.type === 'drawGesture2d') {
-        datasetReader(msg)
+        datasetReader(msg, config, ws)
       }
       else if (msg.type === 'addNewGesture2d') {
         datasetAddNewGesture(msg)
@@ -243,7 +243,7 @@ function loadDataset(type, datasetsConfig) {
   }
 }
 
-function datasetReader(msg) {
+function datasetReader(msg, config, ws) {
   let name_gesture = msg.name
   let name_gesture_upper = msg.name.toUpperCase()
   if(name_gesture) {
@@ -263,7 +263,7 @@ function datasetReader(msg) {
               // If there is gesture data to send to the application
               message.data.push(ret);
               if (config.general.general.debug) {
-                console.log(JSON.stringify(message));
+                console.log("ERROR : ", JSON.stringify(message));
               }
             }
             if (message.data.length > 0) {
